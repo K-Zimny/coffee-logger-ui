@@ -1,24 +1,24 @@
 import { NextResponse } from "next/server";
-import AWS from "aws-sdk";
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocumentClient, ScanCommand } from "@aws-sdk/lib-dynamodb";
 
-// DynamoDB DocumentClient
-const dynamoDB = new AWS.DynamoDB.DocumentClient({
-  region: process.env.AWS_REGION,
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+const ddbClient = new DynamoDBClient({
+  region: process.env.REGION,
 });
+
+const dynamoDB = DynamoDBDocumentClient.from(ddbClient);
 
 export async function GET() {
   try {
-    const data = await dynamoDB.scan("MYTABLENAME").promise();
+    const params = {
+      TableName: process.env.TABLE_NAME,
+    };
+
+    const data = await dynamoDB.send(new ScanCommand(params));
+
     return NextResponse.json(data.Items);
   } catch (err) {
     console.error(err);
-    return NextResponse.json(
-      {
-        error: "Error fetching data",
-      },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Error fetching data" }, { status: 500 });
   }
 }

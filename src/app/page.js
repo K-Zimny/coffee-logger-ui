@@ -1,4 +1,7 @@
+import { GET } from "./api/get-items/route";
+
 export default function Home() {
+  console.log(GET());
   return (
     <>
       <div>
