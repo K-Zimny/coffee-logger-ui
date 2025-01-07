@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, ScanCommand } from "@aws-sdk/lib-dynamodb";
 
+//Pleasework
+
 const ddbClient = new DynamoDBClient({
   region: process.env.REGION,
 });
