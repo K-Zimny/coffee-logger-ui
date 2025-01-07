@@ -1,7 +1,13 @@
-import { GET } from "./api/get-items/route";
+"use-client";
+import { useEffect } from "react";
 
 export default function Home() {
-  console.log(GET());
+  useEffect(() => {
+    fetch("/api/get-items")
+      .then(() => console.log("Fetched /api/get-items"))
+      .catch(console.error);
+  }, []);
+
   return (
     <>
       <div>
