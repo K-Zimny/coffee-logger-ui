@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 export default function Home() {
   useEffect(() => {
-    fetch("src/api/get-items")
+    fetch("/api/get-items")
       .then(() => console.log("Fetched /api/get-items"))
       .catch(console.error);
   }, []);
