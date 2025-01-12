@@ -1,27 +1,37 @@
 import { NextResponse } from "next/server";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
+import { ScanCommand } from "@aws-sdk/lib-dynamodb";
 
-// Create the low-level client
+function getCredentials() {
+  if (process.env.ACCESS_KEY_ID && process.env.SECRET_ACCESS_KEY) {
+    return {
+      accessKeyId: process.env.ACCESS_KEY_ID,
+      secretAccessKey: process.env.SECRET_ACCESS_KEY,
+    };
+  }
+  return undefined;
+}
+
 const client = new DynamoDBClient({
-  region: process.env.REGION,
-  credentials: {
-    accessKeyId: process.env.ACCESS_KEY_ID || "",
-    secretAccessKey: process.env.SECRET_ACCESS_KEY || "",
-  },
+  region: process.env.REGION || "",
+  credentials: getCredentials(),
 });
-
-// Wrap it in DocumentClient for convenience
-const dynamoDB = DynamoDBDocumentClient.from(client);
 
 export async function GET() {
   try {
-    const data = await dynamoDB.scan({
+    const params = {
       TableName: process.env.TABLE_NAME,
-    });
-    return NextResponse.json(data.Items);
+    };
+
+    const data = await client.send(new ScanCommand(params));
+
+    return NextResponse.json(data.Items ?? []);
   } catch (err) {
-    console.error("DynamoDB Error:", err);
-    return NextResponse.json({ error: "Error fetching data" }, { status: 500 });
+    console.error("Scan error:", err);
+
+    return NextResponse.json(
+      { error: "Error fetching items" },
+      { status: 500 }
+    );
   }
 }
