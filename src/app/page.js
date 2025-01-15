@@ -1,24 +1,30 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import mockdata from "@/app/mockdata.json";
 
 export default function Home() {
+  const isLiveData = false;
   const [coffeeData, setCoffeeData] = useState([]);
 
   useEffect(() => {
-    fetch("/api/get-items")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setCoffeeData(data);
-      })
-      .catch((err) => {
-        console.error("Error fetching data:", err);
-      });
+    if (isLiveData) {
+      fetch("/api/get-items")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setCoffeeData(data);
+        })
+        .catch((err) => {
+          console.error("Error fetching data:", err);
+        });
+    } else {
+      setCoffeeData(mockdata);
+    }
   }, []);
 
   return (
