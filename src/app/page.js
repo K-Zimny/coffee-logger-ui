@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import mockdata from "@/app/mockdata.json";
 
 export default function Home() {
-  const isLiveData = false;
+  const isLiveData = false; // Set true for DB data
   const [coffeeData, setCoffeeData] = useState([]);
 
   useEffect(() => {
