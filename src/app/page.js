@@ -4,26 +4,19 @@ import { useEffect, useState } from "react";
 import mockdata from "@/app/mockdata.json";
 
 export default function Home() {
-  const isLiveData = false; // Set true for DB data
   const [coffeeData, setCoffeeData] = useState([]);
 
-  useEffect(() => {
-    if (isLiveData) {
+  // Load Data
+  useEffect((isLiveData = false) => {
+    if (!isLiveData) setCoffeeData(mockdata)
+    else {
       fetch("/api/get-items")
         .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          return response.json();
+            if (!response.ok) {throw new Error(`HTTP error! status: ${response.status}`)}
+            return response.json();
         })
-        .then((responseJson) => {
-          setCoffeeData(responseJson);
-        })
-        .catch((err) => {
-          console.error("Error fetching data:", err);
-        });
-    } else {
-      setCoffeeData(mockdata);
+        .then((response) => setCoffeeData(response))
+        .catch((err) => console.error("Error fetching data:", err));
     }
   }, []);
 
@@ -35,9 +28,7 @@ export default function Home() {
         <hr />
         <p>Data:</p>
         <ul>
-          {coffeeData.map((item) => {
-            return <li key={item.EventID}>{item.Timestamp}</li>;
-          })}
+          {coffeeData.map((item) => {return <li key={item.EventID}>{item.Timestamp}</li>})}
         </ul>
       </div>
     </>
