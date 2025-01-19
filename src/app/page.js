@@ -16,16 +16,25 @@ export default function Home() {
           }
           return response.json();
         })
-        .then((data) => {
-          setCoffeeData(data);
+        .then((responseJson) => {
+          setCoffeeData(orderByTime(responseJson));
         })
         .catch((err) => {
           console.error("Error fetching data:", err);
         });
     } else {
-      setCoffeeData(mockdata);
+      setCoffeeData(orderByTime(mockdata));
     }
   }, []);
+
+  let orderedArray = [];
+  const orderByTime = (data) => {
+    data.map((item) => {
+      orderedArray.push(item.Timestamp);
+    });
+    console.log("orderedArray: ", orderedArray);
+    return orderedArray;
+  };
 
   return (
     <>
@@ -35,8 +44,8 @@ export default function Home() {
         <hr />
         <p>Data:</p>
         <ul>
-          {coffeeData.map((item) => {
-            return <li key={item.EventID}>{item.Timestamp}</li>;
+          {coffeeData.map((brew) => {
+            return <li key={brew}>{brew}</li>;
           })}
         </ul>
       </div>
