@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import mockdata from "@/app/mockdata.json";
 
 export default function Home() {
-  const [rawData, setRawData] = useState([]);
+  const [rawData, setRawData] = useState([])
+  const [cleanData, setCleanData] = useState([])
 
   // Load Data
   useEffect((isDBData = false) => {
@@ -27,10 +28,10 @@ export default function Home() {
     class BrewEvent {
       constructor(id, year, month, day, hour) {
         this.id = id
-        this.year = year
-        this.month = month
-        this.day = day
-        this.hour = hour
+        this.year = parseInt(year)
+        this.month = parseInt(month)
+        this.day = parseInt(day)
+        this.hour = parseInt(hour)
       }
     }
 
@@ -43,9 +44,25 @@ export default function Home() {
     return formattedArray
   }
 
+  const tallyData = (cleanData) => {
+    let tallyObj = {}
+    cleanData.map(({year, month, day, hour})=>{
+      if (tallyObj[year]) tallyObj[parseInt(year)]++
+      else tallyObj[year] = 1
+    })
+  return tallyObj
+  }
+
+  // Effects ================================================================================================================================================
   useEffect(()=>{
     console.log(formatData(rawData))
+    setCleanData(formatData(rawData))
   },[rawData])
+
+  useEffect(()=>{
+    console.log(tallyData(cleanData))
+  },[cleanData])
+
 
   return (
     <>
