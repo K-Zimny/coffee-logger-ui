@@ -20,24 +20,22 @@ export default function Home() {
     }
   }, []);
 
-  const formatData = (rawData) => {
-    const formattedDate = {
-      year: "",
-      month: "",
-      day: "",
-      hour: ""
-    }
-    
+  const formatData = (rawData) => {    
     let formattedArray = []
     const datePattern = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}).*/;
+    
+    class CleanData {
+      constructor(year, month, day, hour) {
+        this.year = year
+        this.month = month
+        this.day = day
+        this.hour = hour
+      }
+    }
+
     rawData.map((item)=>{
       const dataMatched = item.Timestamp.match(datePattern)
-      const dataObject = Object.create(formattedDate)
-
-      dataObject.year  = dataMatched[1]
-      dataObject.month = dataMatched[2]
-      dataObject.day   = dataMatched[3]
-      dataObject.hour  = dataMatched[4]
+      const dataObject = new CleanData(dataMatched[1], dataMatched[2], dataMatched[3], dataMatched[4])
       
       formattedArray.push(dataObject)
     })
