@@ -20,12 +20,13 @@ export default function Home() {
     }
   }, []);
 
-  const formatData = (rawData) => {    
+  const formatData = (rawData) => {
     let formattedArray = []
     const datePattern = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}).*/;
-    
-    class CleanData {
-      constructor(year, month, day, hour) {
+
+    class BrewEvent {
+      constructor(id, year, month, day, hour) {
+        this.id = id
         this.year = year
         this.month = month
         this.day = day
@@ -35,7 +36,7 @@ export default function Home() {
 
     rawData.map((item)=>{
       const dataMatched = item.Timestamp.match(datePattern)
-      const dataObject = new CleanData(dataMatched[1], dataMatched[2], dataMatched[3], dataMatched[4])
+      const dataObject = new BrewEvent(item.EventID, dataMatched[1], dataMatched[2], dataMatched[3], dataMatched[4])
       
       formattedArray.push(dataObject)
     })
