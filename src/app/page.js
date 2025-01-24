@@ -4,13 +4,15 @@ import { useEffect, useState } from "react";
 import mockdata from "@/app/mockdata.json";
 
 export default function Home() {
-  const [renderableYears, setRenderableYears] = useState(false)
-  const [talliedData    ,setTalliedData]      = useState(false)
-  const [cleanData      ,setCleanData]        = useState([])
-  const [rawData        ,setRawData]          = useState([])
+  const [talliedYears,   setTalliedYears] = useState([])
+  const [talliedMonths, setTalliedMonths] = useState([])
+  const [talliedDays,     setTalliedDays] = useState([])
+  const [talliedHours,   setTalliedHours] = useState([])
+  const [cleanData         ,setCleanData] = useState([])
+  const [rawData             ,setRawData] = useState([])
 
   // Load Data
-  useEffect((isDBData = true) => {
+  useEffect((isDBData = false) => {
     if (!isDBData) setRawData(mockdata)
     else {
       fetch("/api/get-items")
@@ -61,12 +63,6 @@ export default function Home() {
       if(tallyObj["dayGroup"]    [day])  {tallyObj["dayGroup"]    [day]++}  else{tallyObj["dayGroup"]    [day] = 1}
     })
 
-  return tallyObj
-  }
-
-  const renderTallyYears = (talliedData) => {
-    if(!talliedData) return
-
     class YearData {
       constructor(key, value){
         this.year   = key
@@ -74,12 +70,50 @@ export default function Home() {
       }
     }
 
-    let renderTallyArray = []
-    for(let i = 0; i < Object.keys(talliedData.yearGroup).length; i++){
-      renderTallyArray.push(new YearData(Object.keys(talliedData.yearGroup)[i],Object.values(talliedData.yearGroup)[i]))
+    class MonthData {
+      constructor(key, value){
+        this.month   = key
+        this.amount  = value
+      }
     }
-    console.log("renderTallyArray:", renderTallyArray)
-    return renderTallyArray
+
+    class DayData {
+      constructor(key, value){
+        this.day    = key
+        this.amount = value
+      }
+    }
+
+    class HourData {
+      constructor(key, value){
+        this.hour   = key
+        this.amount = value
+      }
+    }
+
+    const talliedYearArray = []
+    for(let i = 0; i < Object.keys(tallyObj.yearGroup).length; i++){
+      talliedYearArray.push(new YearData(Object.keys(tallyObj.yearGroup)[i],Object.values(tallyObj.yearGroup)[i]))
+    }
+    setTalliedYears(talliedYearArray)
+
+    const talliedMonthArray = []
+    for(let i = 0; i < Object.keys(tallyObj.monthGroup).length; i++){
+      talliedMonthArray.push(new MonthData(Object.keys(tallyObj.monthGroup)[i],Object.values(tallyObj.monthGroup)[i]))
+    }
+    setTalliedMonths(talliedMonthArray)
+
+    const talliedDayArray = []
+    for(let i = 0; i < Object.keys(tallyObj.dayGroup).length; i++){
+      talliedDayArray.push(new DayData(Object.keys(tallyObj.dayGroup)[i],Object.values(tallyObj.dayGroup)[i]))
+    }
+    setTalliedDays(talliedDayArray)
+
+    const talliedHourArray = []
+    for(let i = 0; i < Object.keys(tallyObj.hourGroup).length; i++){
+      talliedHourArray.push(new HourData(Object.keys(tallyObj.hourGroup)[i],Object.values(tallyObj.hourGroup)[i]))
+    }
+    setTalliedHours(talliedHourArray)
   }
 
   // Effects ================================================================================================================================================
@@ -88,30 +122,62 @@ export default function Home() {
   },[rawData])
 
   useEffect(()=>{
-    console.log("Clean Data: ", cleanData)
-    setTalliedData(tallyData(cleanData))
+    console.log(cleanData)
+    tallyData(cleanData)
   },[cleanData])
 
   useEffect(()=>{
-    console.log("TalliedData:",talliedData)
-    console.log("TalliedData.yearGroup:",talliedData.yearGroup)
-    setRenderableYears(renderTallyYears(talliedData))
-  },[talliedData])
+    console.log("Tallied Years: ", talliedYears)
+    console.log("Tallied Months: ", talliedMonths)
+    console.log("Tallied Days: ", talliedDays)
+    console.log("Tallied Hours: ", talliedHours)
+  },[talliedYears, talliedMonths, talliedDays, talliedHours])
 
   return (
     <>
       <div>
         <h1>Coffee Logger</h1>
-        <p>Number of Pots Brewed: {rawData.length}</p>
-        {renderableYears && 
-          renderableYears.map((year,i)=>{
-            return <p key={i}>{year.year}:{year.amount} pots</p>
-          })
+        <h2>Total Pots Brewed: {rawData.length}</h2>
+        <hr />
+        <h2>Brew By Years</h2>
+        {talliedYears &&
+          <ul>
+            {talliedYears.map((year,i)=>{
+              return <li key={i}>{year.year}:{year.amount} pots</li>
+            })}
+          </ul>
         }
         <hr />
-        <p>Data:</p>
+        <h2>Brew By Months</h2>
+        {talliedMonths && 
+          <ul>
+            {talliedMonths.map((month,i)=>{
+              return <li key={i}>{month.month}:{month.amount} pots</li>
+            })}
+          </ul>
+        }
+        <hr />
+        <h2>Brew By Day</h2>
+        {talliedDays && 
+          <ul>
+            {talliedDays.map((day,i)=>{
+              return <li key={i}>{day.day}:{day.amount} pots</li>
+            })}
+          </ul>
+        }
+        <hr />
+        <h2>Brew By Hour</h2>
+        {talliedHours &&
+          <ul>
+            {talliedHours.map((hour,i)=>{
+              return <li key={i}>{hour.hour}:{hour.amount} pots</li>
+            })}
+          </ul>
+        }
+        <hr />
+        <h2>Data:</h2>
         <ul>
-          {rawData.map((item) => {return <li key={item.EventID}>{item.Timestamp}</li>})}
+          {cleanData.map((item) => {return <li key={item.id}>{item.month}-{item.day}-{item.year} - {item.hour}H</li>})}
         </ul>
       </div>
     </>
