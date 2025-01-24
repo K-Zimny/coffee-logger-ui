@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import mockdata from "@/app/mockdata.json";
 
 export default function Home() {
-  const [talliedData ,setTalliedData] = useState(false)
-  const [cleanData   ,setCleanData]   = useState([])
-  const [rawData     ,setRawData]     = useState([])
+  const [renderableYears, setRenderableYears] = useState(false)
+  const [talliedData    ,setTalliedData]      = useState(false)
+  const [cleanData      ,setCleanData]        = useState([])
+  const [rawData        ,setRawData]          = useState([])
 
   // Load Data
   useEffect((isDBData = true) => {
@@ -63,13 +64,22 @@ export default function Home() {
   return tallyObj
   }
 
-  const renderTallyData = (talliedData) => {
+  const renderTallyYears = (talliedData) => {
     if(!talliedData) return
+
+    class YearData {
+      constructor(key, value){
+        this.year   = key
+        this.amount = value
+      }
+    }
 
     let renderTallyArray = []
     for(let i = 0; i < Object.keys(talliedData.yearGroup).length; i++){
-      renderTallyArray.push([Object.keys(talliedData.yearGroup)[i],Object.values(talliedData.yearGroup)[i]])
+      renderTallyArray.push(new YearData(Object.keys(talliedData.yearGroup)[i],Object.values(talliedData.yearGroup)[i]))
     }
+    console.log("renderTallyArray:", renderTallyArray)
+    return renderTallyArray
   }
 
   // Effects ================================================================================================================================================
@@ -78,11 +88,14 @@ export default function Home() {
   },[rawData])
 
   useEffect(()=>{
+    console.log("Clean Data: ", cleanData)
     setTalliedData(tallyData(cleanData))
   },[cleanData])
 
   useEffect(()=>{
-    renderTallyData(talliedData)
+    console.log("TalliedData:",talliedData)
+    console.log("TalliedData.yearGroup:",talliedData.yearGroup)
+    setRenderableYears(renderTallyYears(talliedData))
   },[talliedData])
 
   return (
@@ -90,7 +103,11 @@ export default function Home() {
       <div>
         <h1>Coffee Logger</h1>
         <p>Number of Pots Brewed: {rawData.length}</p>
-        {talliedData.yearGroup && <p>{Object.keys(talliedData.yearGroup)[0]}:{Object.values(talliedData.yearGroup)[0]}</p>}
+        {renderableYears && 
+          renderableYears.map((year,i)=>{
+            return <p key={i}>{year.year}:{year.amount} pots</p>
+          })
+        }
         <hr />
         <p>Data:</p>
         <ul>
