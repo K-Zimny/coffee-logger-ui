@@ -97,21 +97,48 @@ export default function Home() {
     }
     setTalliedYears(talliedYearArray)
 
+    // ======================================================================================
+
     const talliedMonthArray = []
-    for(let i = 0; i < Object.keys(tallyObj.monthGroup).length; i++){
-      talliedMonthArray.push(new MonthData(Object.keys(tallyObj.monthGroup)[i],Object.values(tallyObj.monthGroup)[i]))
+    for(let i = 1; i <= 12; i++){
+      let existsInSet = false
+      for(let ii = 0; ii <= 12; ii++){
+        if(i == Object.keys(tallyObj.monthGroup)[ii]){
+          talliedMonthArray.push(new MonthData(Object.keys(tallyObj.monthGroup)[ii],Object.values(tallyObj.monthGroup)[ii]))
+          existsInSet = true
+        }
+      }
+      !existsInSet ? talliedMonthArray.push(new MonthData(i, 0)) : ""
     }
     setTalliedMonths(talliedMonthArray)
 
+    // ======================================================================================
+
     const talliedDayArray = []
-    for(let i = 0; i < Object.keys(tallyObj.dayGroup).length; i++){
-      talliedDayArray.push(new DayData(Object.keys(tallyObj.dayGroup)[i],Object.values(tallyObj.dayGroup)[i]))
+    for(let i = 1; i <= 31; i++){
+      let existsInSet = false
+      for(let ii = 0; ii <= 31; ii++){
+        if(i == Object.keys(tallyObj.dayGroup)[ii]){
+          talliedDayArray.push(new DayData(Object.keys(tallyObj.dayGroup)[ii],Object.values(tallyObj.dayGroup)[ii]))
+          existsInSet = true
+        }
+      }
+      !existsInSet ? talliedDayArray.push(new DayData(i, 0)) : ""
     }
     setTalliedDays(talliedDayArray)
 
+    // ======================================================================================
+    
     const talliedHourArray = []
-    for(let i = 0; i < Object.keys(tallyObj.hourGroup).length; i++){
-      talliedHourArray.push(new HourData(Object.keys(tallyObj.hourGroup)[i],Object.values(tallyObj.hourGroup)[i]))
+    for(let i = 0; i <= 24; i++){
+      let existsInSet = false
+      for(let ii = 0; ii <= 24; ii++){
+        if(i == Object.keys(tallyObj.hourGroup)[ii]){
+          talliedHourArray.push(new HourData(Object.keys(tallyObj.hourGroup)[ii],Object.values(tallyObj.hourGroup)[ii]))
+          existsInSet = true
+        }
+      }
+      !existsInSet ? talliedHourArray.push(new HourData(i, 0)) : ""
     }
     setTalliedHours(talliedHourArray)
   }
@@ -127,9 +154,9 @@ export default function Home() {
   },[cleanData])
 
   useEffect(()=>{
-    console.log("Tallied Years: ", talliedYears)
-    console.log("Tallied Months: ", talliedMonths)
-    console.log("Tallied Days: ", talliedDays)
+    // console.log("Tallied Years: ", talliedYears)
+    // console.log("Tallied Months: ", talliedMonths)
+    // console.log("Tallied Days: ", talliedDays)
     console.log("Tallied Hours: ", talliedHours)
   },[talliedYears, talliedMonths, talliedDays, talliedHours])
 
