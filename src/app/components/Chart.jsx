@@ -41,8 +41,6 @@ export function Chart({ coffeeData, title }) {
     labelArray.push(time[0])
     dataArray.push(amount[1])
   }
-  console.log("labelArray", labelArray)
-  console.log("amount", dataArray)
 
   const labels = labelArray
 
@@ -52,7 +50,11 @@ export function Chart({ coffeeData, title }) {
       {
         label: "Brews",
         data: dataArray,
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        backgroundColor: "#967259",
+        borderColor: "#725038",
+        borderWidth: 4,
+        borderRadius: 5,
+        barPercentage: .75
       },
     ],
   };

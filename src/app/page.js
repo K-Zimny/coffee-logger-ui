@@ -12,21 +12,23 @@ export default function Home() {
   const [cleanData         ,setCleanData] = useState([])
   const [rawData             ,setRawData] = useState([])
 
+  const excludeTestData = true
+  
   // Load Data
-  useEffect((isDBData = false) => {
+  useEffect((isDBData = true) => {
     if (!isDBData) setRawData(mockdata)
-    else {
-      fetch("/api/get-items")
-        .then((response) => {
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
-            return response.json();
-        })
+      else {
+    fetch("/api/get-items")
+    .then((response) => {
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
+        return response.json();
+    })
         .then((response) => setRawData(response))
         .catch((err) => console.error("Error fetching data:", err));
-    }
-  }, []);
-
-  const formatData = (rawData) => {
+      }
+    }, []);
+    
+    const formatData = (rawData) => {
     const formattedArray = []
     const datePattern    = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}).*/;
 
@@ -44,7 +46,15 @@ export default function Home() {
       const dataMatched = item.Timestamp.match(datePattern)
       const dataObject  = new BrewEvent(item.EventID, dataMatched[1], dataMatched[2], dataMatched[3], dataMatched[4])
       
-      formattedArray.push(dataObject)
+      console.log(dataObject.year)
+      console.log(formattedArray)
+
+      if(excludeTestData) {
+        if(dataObject.year !== 2024) {
+          formattedArray.push(dataObject)
+        }
+      }
+      else {formattedArray.push(dataObject)}
     })
     return formattedArray
   }
@@ -93,7 +103,7 @@ export default function Home() {
     }
 
     const talliedYearArray = []
-    for(let i = 2024; i <= (2024 + Object.keys(tallyObj.yearGroup).length - 1); i++){
+    for(let i = excludeTestData? 2025: 2024; i <= (excludeTestData? 2025: 2024 + Object.keys(tallyObj.yearGroup).length - 1); i++){
       let existsInSet = false
       for(let ii = 0; ii <= Object.keys(tallyObj.yearGroup).length; ii++){
         if(i == Object.keys(tallyObj.yearGroup)[ii]){
@@ -163,7 +173,7 @@ export default function Home() {
   useEffect(()=>{
     // console.log("Tallied Years: ", talliedYears)
     // console.log("Tallied Months: ", talliedMonths)
-    // console.log("Tallied Days: ", talliedDays)
+    console.log("Tallied Days: ", talliedDays)
     // console.log("Tallied Hours: ", talliedHours)
   },[talliedYears, talliedMonths, talliedDays, talliedHours])
 
@@ -171,16 +181,16 @@ export default function Home() {
     <>
       <div>
         <h1>Coffee Logger</h1>
-        <h2>Total Pots Brewed: {rawData.length}</h2>
-        <hr />
+        <h2>Total Pots Brewed: {cleanData.length}</h2>
+        {/* <hr />
         <h2>Brew By Years</h2>
-        {talliedYears && <div className="chart"><Chart coffeeData={talliedYears} title="Year"/></div>}
+        {talliedYears && <div className="chart"><Chart coffeeData={talliedYears} title="Year"/></div>} */}
         <hr />
         <h2>Brew By Months</h2>
         {talliedYears && <div className="chart"><Chart coffeeData={talliedMonths} title="Month"/></div>}
-        <hr />
+        {/* <hr />
         <h2>Brew By Day</h2>
-        {talliedYears && <div className="chart"><Chart coffeeData={talliedDays} title="Day"/></div>}
+        {talliedYears && <div className="chart"><Chart coffeeData={talliedDays} title="Day"/></div>} */}
         <hr />
         <h2>Brew By Hour</h2>
         {talliedYears && <div className="chart"><Chart coffeeData={talliedHours} title="Hour"/></div>}
