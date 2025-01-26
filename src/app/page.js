@@ -92,8 +92,15 @@ export default function Home() {
     }
 
     const talliedYearArray = []
-    for(let i = 0; i < Object.keys(tallyObj.yearGroup).length; i++){
-      talliedYearArray.push(new YearData(Object.keys(tallyObj.yearGroup)[i],Object.values(tallyObj.yearGroup)[i]))
+    for(let i = 2024; i <= (2024 + Object.keys(tallyObj.yearGroup).length - 1); i++){
+      let existsInSet = false
+      for(let ii = 0; ii <= Object.keys(tallyObj.yearGroup).length; ii++){
+        if(i == Object.keys(tallyObj.yearGroup)[ii]){
+          talliedYearArray.push(new YearData(Object.keys(tallyObj.yearGroup)[ii],Object.values(tallyObj.yearGroup)[ii]))
+          existsInSet = true
+        }
+      }
+      !existsInSet ? talliedYearArray.push(new YearData(i, 0)) : ""
     }
     setTalliedYears(talliedYearArray)
 
