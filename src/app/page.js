@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import mockdata from "@/app/mockdata.json";
+import {Chart} from "@/app/components/Chart"
 
 export default function Home() {
   const [talliedYears,   setTalliedYears] = useState([])
@@ -156,7 +157,7 @@ export default function Home() {
   },[rawData])
 
   useEffect(()=>{
-    console.log(cleanData)
+    // console.log(cleanData)
     tallyData(cleanData)
   },[cleanData])
 
@@ -164,7 +165,7 @@ export default function Home() {
     // console.log("Tallied Years: ", talliedYears)
     // console.log("Tallied Months: ", talliedMonths)
     // console.log("Tallied Days: ", talliedDays)
-    console.log("Tallied Hours: ", talliedHours)
+    // console.log("Tallied Hours: ", talliedHours)
   },[talliedYears, talliedMonths, talliedDays, talliedHours])
 
   return (
@@ -174,45 +175,49 @@ export default function Home() {
         <h2>Total Pots Brewed: {rawData.length}</h2>
         <hr />
         <h2>Brew By Years</h2>
-        {talliedYears &&
+        {talliedYears && <Chart coffeeData={talliedYears}/>}
+        {/* {talliedYears &&
           <ul>
             {talliedYears.map((year,i)=>{
               return <li key={i}>{year.year}:{year.amount} pots</li>
             })}
           </ul>
-        }
+        } */}
         <hr />
         <h2>Brew By Months</h2>
-        {talliedMonths && 
+        {talliedYears && <Chart coffeeData={talliedMonths}/>}
+        {/* {talliedMonths && 
           <ul>
             {talliedMonths.map((month,i)=>{
               return <li key={i}>{month.month}:{month.amount} pots</li>
             })}
           </ul>
-        }
+        } */}
         <hr />
         <h2>Brew By Day</h2>
-        {talliedDays && 
+        {talliedYears && <Chart coffeeData={talliedDays}/>}
+        {/* {talliedDays && 
           <ul>
             {talliedDays.map((day,i)=>{
               return <li key={i}>{day.day}:{day.amount} pots</li>
             })}
           </ul>
-        }
+        } */}
         <hr />
         <h2>Brew By Hour</h2>
-        {talliedHours &&
+        {talliedYears && <Chart coffeeData={talliedHours}/>}
+        {/* {talliedHours &&
           <ul>
             {talliedHours.map((hour,i)=>{
               return <li key={i}>{hour.hour}:{hour.amount} pots</li>
             })}
           </ul>
-        }
+        } */}
         <hr />
-        <h2>Data:</h2>
+        {/* <h2>Data:</h2>
         <ul>
           {cleanData.map((item) => {return <li key={item.id}>{item.month}-{item.day}-{item.year} - {item.hour}H</li>})}
-        </ul>
+        </ul> */}
       </div>
     </>
   );
