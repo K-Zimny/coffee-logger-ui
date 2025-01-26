@@ -33,10 +33,10 @@ export default function Home() {
     class BrewEvent {
       constructor(id, year, month, day, hour) {
         this.id    = id
-        this.year  = year
-        this.month = month
-        this.day   = day
-        this.hour  = hour
+        this.year  = parseInt(year)
+        this.month = parseInt(month)
+        this.day   = parseInt(day)
+        this.hour  = parseInt(hour)
       }
     }
 
@@ -157,7 +157,6 @@ export default function Home() {
   },[rawData])
 
   useEffect(()=>{
-    // console.log(cleanData)
     tallyData(cleanData)
   },[cleanData])
 
@@ -175,49 +174,16 @@ export default function Home() {
         <h2>Total Pots Brewed: {rawData.length}</h2>
         <hr />
         <h2>Brew By Years</h2>
-        {talliedYears && <Chart coffeeData={talliedYears}/>}
-        {/* {talliedYears &&
-          <ul>
-            {talliedYears.map((year,i)=>{
-              return <li key={i}>{year.year}:{year.amount} pots</li>
-            })}
-          </ul>
-        } */}
+        {talliedYears && <div className="chart"><Chart coffeeData={talliedYears} title="Year"/></div>}
         <hr />
         <h2>Brew By Months</h2>
-        {talliedYears && <Chart coffeeData={talliedMonths}/>}
-        {/* {talliedMonths && 
-          <ul>
-            {talliedMonths.map((month,i)=>{
-              return <li key={i}>{month.month}:{month.amount} pots</li>
-            })}
-          </ul>
-        } */}
+        {talliedYears && <div className="chart"><Chart coffeeData={talliedMonths} title="Month"/></div>}
         <hr />
         <h2>Brew By Day</h2>
-        {talliedYears && <Chart coffeeData={talliedDays}/>}
-        {/* {talliedDays && 
-          <ul>
-            {talliedDays.map((day,i)=>{
-              return <li key={i}>{day.day}:{day.amount} pots</li>
-            })}
-          </ul>
-        } */}
+        {talliedYears && <div className="chart"><Chart coffeeData={talliedDays} title="Day"/></div>}
         <hr />
         <h2>Brew By Hour</h2>
-        {talliedYears && <Chart coffeeData={talliedHours}/>}
-        {/* {talliedHours &&
-          <ul>
-            {talliedHours.map((hour,i)=>{
-              return <li key={i}>{hour.hour}:{hour.amount} pots</li>
-            })}
-          </ul>
-        } */}
-        <hr />
-        {/* <h2>Data:</h2>
-        <ul>
-          {cleanData.map((item) => {return <li key={item.id}>{item.month}-{item.day}-{item.year} - {item.hour}H</li>})}
-        </ul> */}
+        {talliedYears && <div className="chart"><Chart coffeeData={talliedHours} title="Hour"/></div>}
       </div>
     </>
   );

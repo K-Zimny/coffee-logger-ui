@@ -10,9 +10,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
-export function Chart({ coffeeData }) {
-  console.log("coffeeData",coffeeData);
-
+export function Chart({ coffeeData, title }) {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -30,7 +28,7 @@ export function Chart({ coffeeData }) {
       },
       title: {
         display: true,
-        text: "Chart.js Bar Chart",
+        text: `Brews By ${title}`,
       },
     },
   };
@@ -52,7 +50,7 @@ export function Chart({ coffeeData }) {
     labels,
     datasets: [
       {
-        label: "Dataset 1",
+        label: "Brews",
         data: dataArray,
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
