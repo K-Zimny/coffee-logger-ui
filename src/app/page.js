@@ -12,7 +12,7 @@ export default function Home() {
   const [rawData             ,setRawData] = useState([])
   
   // Load Data
-  useEffect((isDBData = false) => {
+  useEffect((isDBData = true) => {
     if (!isDBData) setRawData(mockdata)
       else {
     fetch("/api/get-items")
