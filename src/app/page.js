@@ -112,13 +112,10 @@ export default function Home() {
   },[rawData])
 
   useEffect(()=>{
-    // console.log(cleanData)
     tallyData(cleanData)
   },[cleanData])
 
   useEffect(()=>{
-    // console.log("Tallied Months: ", talliedMonths)
-    // console.log("Tallied Hours: ", talliedHours)
   },[talliedMonths, talliedHours])
 
   return (
