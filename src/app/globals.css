@@ -25,7 +25,7 @@ body {
 /* Body Styling */
 body {
   font-family: Arial, sans-serif;
-  background-color: #1f1f1f;
+  background-color: #f9f9f9;
   color: #0e0e0e;
   padding: 20px;
   display: flex;
@@ -36,9 +36,9 @@ body {
 
 /* Container for content */
 div {
-  background-color: #ffffff;
+  background-color: #f9f9f9;
   border-radius: 8px;
-  padding: 20px;
+  /*padding: 20px; */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
 }
@@ -56,6 +56,7 @@ p {
   color: #b3abab;
   margin-bottom: 10px;
   text-align: center;
+  background-color: #f9f9f9;
 }
 
 /* Horizontal Rule */
@@ -78,4 +79,38 @@ li {
   border-radius: 4px;
   font-size: 1em;
   color: #ffffff;
+}
+
+/* Card */
+
+.card {
+  /* background-color: #ffffff; */
+  margin-top: 3rem;
+}
+
+#total.card {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+  h2{
+    font-size: 1.75rem;
+  }
+  p {
+    margin-bottom: 0;
+    font-size: 18rem;
+    color: black;
+  }
+  /* .overlay {
+    position: absolute;
+    inset: 0;
+    background-image: url(/coffee-pot.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -1;
+    opacity: 1;
+    background-color: #1a0b00b5;
+    background-blend-mode: color-dodge;
+  } */
 }

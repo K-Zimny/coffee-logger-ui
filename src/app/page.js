@@ -3,31 +3,17 @@
 import { useEffect, useState } from "react";
 import mockdata from "@/app/mockdata.json";
 import {Chart} from "@/app/components/Chart"
+import Image from "next/image";
 
-export default function Home() {
+export default function Home(){
+  const [responseData, setResponseData] = useState([])
+  const [orderedMonthData, setOrderedMonthData] = useState([])
+  const [orderedHourData, setOrderedHourData] = useState([])
+  const formattedArray = []
+  let talliedObject = {}
 
-  const [talliedMonths, setTalliedMonths] = useState([])
-  const [talliedHours,   setTalliedHours] = useState([])
-  const [cleanData         ,setCleanData] = useState([])
-  const [rawData             ,setRawData] = useState([])
-  
-  // Load Data
-  useEffect((isDBData = true) => {
-    if (!isDBData) setRawData(mockdata)
-      else {
-    fetch("/api/get-items")
-    .then((response) => {
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
-        return response.json();
-    })
-        .then((response) => setRawData(response))
-        .catch((err) => console.error("Error fetching data:", err));
-      }
-    }, []);
-    
-    const formatData = (rawData) => {
-    const formattedArray = []
-    const datePattern    = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}).*/;
+  function formatData(data){
+    const datePattern = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}).*/;
 
     class BrewEvent {
       constructor(id, year, month, day, hour) {
@@ -39,100 +25,116 @@ export default function Home() {
       }
     }
 
-    rawData.map((item)=>{
+    data.map((item)=>{
       const dataMatched = item.Timestamp.match(datePattern)
       const dataObject  = new BrewEvent(item.EventID, dataMatched[1], dataMatched[2], dataMatched[3], dataMatched[4])
 
       formattedArray.push(dataObject)
     })
-
-    return formattedArray
   }
 
-  const tallyData = (cleanData) => {
-    const tallyObj = {
+  function tallyData(data){
+    talliedObject = {
       "monthGroup": {},
       "hourGroup":  {},
     }
 
-    cleanData.map(({month, hour})=>{
-      if(tallyObj["monthGroup"][month])  {tallyObj["monthGroup"][month]++}  else{tallyObj["monthGroup"][month] = 1}
-      if(tallyObj["hourGroup"]  [hour])  {tallyObj["hourGroup"]  [hour]++}  else{tallyObj["hourGroup"]  [hour] = 1}
+    data.map(({month, hour})=>{
+      if(talliedObject["monthGroup"][month])  {talliedObject["monthGroup"][month]++}  else{talliedObject["monthGroup"][month] = 1}
+      if(talliedObject["hourGroup"]  [hour])  {talliedObject["hourGroup"]  [hour]++}  else{talliedObject["hourGroup"]  [hour] = 1}
     })
-
-    const orderData = (() => {
-
-      class MonthData {
-        constructor(key, value){
-          this.month   = key
-          this.amount  = value
-        }
-      }
-  
-      class HourData {
-        constructor(key, value){
-          this.hour   = key
-          this.amount = value
-        }
-      }
-  
-      const talliedMonthArray = []
-      for(let i = 1; i <= 12; i++){
-        let existsInSet = false
-        for(let ii = 0; ii <= 12; ii++){
-          if(i == Object.keys(tallyObj.monthGroup)[ii]){
-            talliedMonthArray.push(new MonthData(Object.keys(tallyObj.monthGroup)[ii],Object.values(tallyObj.monthGroup)[ii]))
-            existsInSet = true
-          }
-        }
-        !existsInSet ? talliedMonthArray.push(new MonthData(i, 0)) : ""
-      }
-      setTalliedMonths(talliedMonthArray)
-  
-      // ======================================================================================
-      
-      const talliedHourArray = []
-      for(let i = 0; i <= 24; i++){
-        let existsInSet = false
-        for(let ii = 0; ii <= 24; ii++){
-          if(i == Object.keys(tallyObj.hourGroup)[ii]){
-            talliedHourArray.push(new HourData(Object.keys(tallyObj.hourGroup)[ii],Object.values(tallyObj.hourGroup)[ii]))
-            existsInSet = true
-          }
-        }
-        !existsInSet ? talliedHourArray.push(new HourData(i, 0)) : ""
-      }
-      setTalliedHours(talliedHourArray)
-    })()
   }
 
-  // Effects ================================================================================================================================================
-  useEffect(()=>{
-    setCleanData(formatData(rawData))
-  },[rawData])
+  function orderData(talliedObject){
+    class MonthData {
+      constructor(key, value){
+        this.month  = key
+        this.amount = value
+      }
+    }
 
-  useEffect(()=>{
-    tallyData(cleanData)
-  },[cleanData])
+    class HourData {
+      constructor(key, value){
+        this.hour   = key
+        this.amount = value
+      }
+    }
 
+    const talliedMonthArray = []
+    for(let i = 1; i <= 12; i++){
+      let existsInSet = false
+      for(let ii = 0; ii <= 12; ii++){
+        if(i == Object.keys(talliedObject.monthGroup)[ii]){
+          talliedMonthArray.push(new MonthData(Object.keys(talliedObject.monthGroup)[ii],Object.values(talliedObject.monthGroup)[ii]))
+          existsInSet = true
+        }
+      }
+      !existsInSet ? talliedMonthArray.push(new MonthData(i, 0)) : ""
+    }
+    setOrderedMonthData(talliedMonthArray)
+
+    // ======================================================================================
+    
+    const talliedHourArray = []
+    for(let i = 0; i <= 24; i++){
+      let existsInSet = false
+      for(let ii = 0; ii <= 24; ii++){
+        if(i == Object.keys(talliedObject.hourGroup)[ii]){
+          talliedHourArray.push(new HourData(Object.keys(talliedObject.hourGroup)[ii],Object.values(talliedObject.hourGroup)[ii]))
+          existsInSet = true
+        }
+      }
+      !existsInSet ? talliedHourArray.push(new HourData(i, 0)) : ""
+    }
+    setOrderedHourData(talliedHourArray)
+  }
+
+  // Load Data ======================================================================================
+  useEffect((isDBData = true) => {
+    if (!isDBData) setResponseData(mockdata)
+      else {
+    fetch("/api/get-items")
+    .then((response) => {
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
+        return response.json();
+    })
+        .then((response) => setResponseData(response))
+        .catch((err) => console.error("Error fetching data:", err));
+      }
+    }, []);
+
+  // Process Data ======================================================================================
   useEffect(()=>{
-  },[talliedMonths, talliedHours])
+    formatData(responseData)
+    tallyData(formattedArray)
+    orderData(talliedObject)
+  },[responseData])
 
   return (
     <>
       <div>
         <h1>Coffee Logger</h1>
         
-        <h2>Total Pots Brewed: {cleanData.length}</h2>
+        <div id="total" className="card flex flex-col">
+          <h2 className="m-auto">Total Pots Brewed: </h2>
+          <div className="flex justify-center items-baseline gap-1">
+            <p>{responseData.length}</p>
+            <Image
+              src="/coffee-pot.svg"
+              width={125}
+              height={200}
+              alt="Picture of the author" />
+          </div>
+        </div>
         
         <div>
           <h2>Brew By Months</h2>
-          {talliedMonths && <div className="chart"><Chart coffeeData={talliedMonths} title="Month"/></div>}
+          {orderedMonthData && <div className="chart"><Chart coffeeData={orderedMonthData} title="Month"/></div>}
         </div>
         
         <div>
           <h2>Brew By Hour</h2>
-          {talliedHours && <div className="chart"><Chart coffeeData={talliedHours} title="Hour"/></div>}
+          {orderedHourData && <div className="chart"><Chart coffeeData={orderedHourData} title="Hour"/></div>}
         </div>
       </div>
     </>
