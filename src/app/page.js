@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import mockdata from "@/app/mockdata.json";
 import {Chart} from "@/app/components/Chart"
+import Image from "next/image";
 
 export default function Home(){
   const [responseData, setResponseData] = useState([])
@@ -114,7 +115,17 @@ export default function Home(){
       <div>
         <h1>Coffee Logger</h1>
         
-        <h2>Total Pots Brewed: {responseData.length}</h2>
+        <div id="total" className="card flex flex-col">
+          <h2 className="m-auto">Total Pots Brewed: </h2>
+          <div className="flex justify-center items-baseline gap-1">
+            <p>{responseData.length}</p>
+            <Image
+              src="/coffee-pot.svg"
+              width={125}
+              height={200}
+              alt="Picture of the author" />
+          </div>
+        </div>
         
         <div>
           <h2>Brew By Months</h2>
