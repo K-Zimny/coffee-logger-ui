@@ -10,6 +10,21 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
+const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];
+
 export function Chart({ coffeeData, title }) {
   ChartJS.register(
     CategoryScale,
@@ -31,7 +46,7 @@ export function Chart({ coffeeData, title }) {
         text: `Brews By ${title}`,
       },
     },
-  };
+  }; 
 
   const labelArray = []
   const dataArray = [] 
@@ -42,7 +57,14 @@ export function Chart({ coffeeData, title }) {
     dataArray.push(amount[1])
   }
 
-  const labels = labelArray
+  const dateArray = []
+
+  if(title == "Month") {
+    for(let i = 0; i < MONTHS.length; i++)
+      dateArray.push(MONTHS[i])
+  }
+  
+  const labels = title == "Month" ? dateArray : labelArray
 
   const data = {
     labels,
