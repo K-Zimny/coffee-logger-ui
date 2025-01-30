@@ -78,9 +78,9 @@ export default function Home(){
     // ======================================================================================
     
     const talliedHourArray = []
-    for(let i = 0; i <= 24; i++){
+    for(let i = 0; i < 24; i++){
       let existsInSet = false
-      for(let ii = 0; ii <= 24; ii++){
+      for(let ii = 0; ii < 24; ii++){
         if(i == Object.keys(talliedObject.hourGroup)[ii]){
           talliedHourArray.push(new HourData(Object.keys(talliedObject.hourGroup)[ii],Object.values(talliedObject.hourGroup)[ii]))
           existsInSet = true
@@ -116,22 +116,23 @@ export default function Home(){
     <>
       <div>
         <h1>Coffee Logger</h1>
-        
-        <div id="total" className="card flex flex-col">
-          <h2 className="m-auto">Total Pots Brewed: </h2>
-          <div className="flex justify-center items-baseline gap-1">
-            <p>{responseData.length}</p>
-            <Image
-              src="/coffee-pot.svg"
-              width={125}
-              height={125}
-              alt="Picture of the author" />
+        <div className="flex">
+          <div id="total" className="card flex flex-col w-1/3">
+            <h2>Total Pots Brewed: </h2>
+            <div className="flex justify-center items-baseline gap-1">
+              <p>{responseData.length}</p>
+              <Image
+                src="/coffee-pot.svg"
+                width={125}
+                height={125}
+                alt="Picture of the author" />
+            </div>
           </div>
-        </div>
-        
-        <div>
-          <h2>Brew By Months</h2>
-          {orderedMonthData && <div className="chart"><Chart coffeeData={orderedMonthData} title="Month"/></div>}
+          
+          <div>
+            <h2>Brew By Months</h2>
+            {orderedMonthData && <div className="chart"><Chart coffeeData={orderedMonthData} title="Month"/></div>}
+          </div>
         </div>
         
         <div>
