@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import mockdata from "@/app/mockdata.json";
-import {Chart} from "@/app/components/Chart"
+import { Chart } from "@/app/components/Chart"
 import Image from "next/image";
 
 export default function Home(){
@@ -59,6 +59,8 @@ export default function Home(){
         this.amount = value
       }
     }
+
+    // ======================================================================================
 
     const talliedMonthArray = []
     for(let i = 1; i <= 12; i++){
@@ -122,7 +124,7 @@ export default function Home(){
             <Image
               src="/coffee-pot.svg"
               width={125}
-              height={200}
+              height={125}
               alt="Picture of the author" />
           </div>
         </div>
