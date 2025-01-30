@@ -95,11 +95,16 @@ li {
     font-size: 1.75rem;
     text-align: left;
   }
-  p {
+  #total-value {
     margin-bottom: 0;
     font-size: 15rem;
     color: black;
     font-weight: lighter;
+    margin-block: -8rem;
+  }
+  p {
+    font-size: .75rem;
+    text-align: left;
   }
 }
 

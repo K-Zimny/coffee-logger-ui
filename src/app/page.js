@@ -120,12 +120,16 @@ export default function Home(){
           <div id="total" className="card flex flex-col w-1/3">
             <h2>Total Pots Brewed: </h2>
             <div className="flex justify-center items-baseline gap-1">
-              <p>{responseData.length}</p>
+              <p id="total-value">{responseData.length}</p>
               <Image
                 src="/coffee-pot.svg"
                 width={125}
                 height={125}
                 alt="Picture of the author" />
+            </div>
+            <div>
+              <p>Coffee Logger is Embedded C/C++ Hardware connected to AWS for real time data storage. A React powered Next JS Application handles this Dashboard.</p>
+              <p>When a pot of coffee is brewed on my home machine an Arduino makes an HTTP request to an AWS API Gateway. Invoking Lambda, the data is stored in a DynamoDB. The frontend fetches the data and renders it here.</p>
             </div>
           </div>
           
