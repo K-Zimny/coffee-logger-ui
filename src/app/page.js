@@ -114,34 +114,35 @@ export default function Home(){
 
   return (
     <>
-      <div>
-        <h1>Coffee Logger</h1>
-        <div className="flex">
-          <div id="total" className="card flex flex-col w-1/3">
+      <div className="h-full flex flex-col gap-8">
+        <div className="flex h-1/2 gap-8 flex-col lg:flex-row">
+          <div id="total" className="card flex flex-col lg:w-1/3">
             <h2>Total Pots Brewed: </h2>
-            <div className="flex justify-center items-baseline gap-1">
+            <div className="flex items-baseline gap-1">
               <p id="total-value">{responseData.length}</p>
-              <Image
-                src="/coffee-pot.svg"
-                width={125}
-                height={125}
-                alt="Picture of the author" />
+              <div className="img-container">
+                <Image
+                  src="/coffee-pot.svg"
+                  fill="true"
+                  alt="Coffee Pot" />
+              </div>
             </div>
             <div>
+            <h1>Coffee Logger</h1>
               <p>Coffee Logger is Embedded C/C++ Hardware connected to AWS for real time data storage. A React powered Next JS Application handles this Dashboard.</p>
               <p>When a pot of coffee is brewed on my home machine an Arduino makes an HTTP request to an AWS API Gateway. Invoking Lambda, the data is stored in a DynamoDB. The frontend fetches the data and renders it here.</p>
             </div>
           </div>
           
-          <div>
-            <h2>Brew By Months</h2>
-            {orderedMonthData && <div className="chart"><Chart coffeeData={orderedMonthData} title="Month"/></div>}
+          <div className="lg:w-2/3">
+            <h2>Brew By Hour</h2>
+            {orderedHourData && <div className="chart flex items-end"><Chart coffeeData={orderedHourData} title="Hour"/></div>}
           </div>
         </div>
         
-        <div>
-          <h2>Brew By Hour</h2>
-          {orderedHourData && <div className="chart"><Chart coffeeData={orderedHourData} title="Hour"/></div>}
+        <div className="h-1/2">
+          <h2>Brew By Months</h2>
+          {orderedMonthData && <div className="chart"><Chart coffeeData={orderedMonthData} title="Month"/></div>}
         </div>
       </div>
     </>
