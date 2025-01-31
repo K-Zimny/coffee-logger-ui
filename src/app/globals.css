@@ -101,7 +101,7 @@ li {
     font-size: 15rem;
     color: black;
     font-weight: lighter;
-    margin-block: -2rem; 
+    margin-block: 0rem;
     @media (max-width: 480px) {
       font-size: 9rem;
     }
@@ -132,4 +132,12 @@ li {
     width: 75px;
     height: 75px;
   }
+}
+
+/* Link */
+
+a {
+  font-size: .75rem;
+  text-decoration: underline;
+  color: #777676;
 }

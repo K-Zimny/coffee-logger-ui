@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import mockdata from "@/app/mockdata.json";
 import { Chart } from "@/app/components/Chart"
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home(){
   const [responseData, setResponseData] = useState([])
@@ -129,8 +130,9 @@ export default function Home(){
             </div>
             <div>
             <h1>Coffee Logger</h1>
-              <p>Coffee Logger is Embedded C/C++ Hardware connected to AWS for real time data storage. A React powered Next JS Application handles this Dashboard.</p>
-              <p>When a pot of coffee is brewed on my home machine an Arduino makes an HTTP request to an AWS API Gateway. Invoking Lambda, the data is stored in a DynamoDB. The frontend fetches the data and renders it here.</p>
+              <p><em>Coffee Logger</em> is an Embedded C/C++ hardware system connected to AWS for real-time data storage and Next.js for retrieval and rendering.</p>
+              <p>When coffee is brewed, an Arduino sends data via an API Gateway to AWS Lambda, storing it in DynamoDB. This React-powered dashboard application then fetches and displays this brew data.</p>
+              <Link href="#">Read more about it here.</Link>
             </div>
           </div>
           
