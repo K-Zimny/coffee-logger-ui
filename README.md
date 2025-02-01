@@ -1,3 +1,5 @@
-Coffee Logger is Embedded C/C++ Hardware connected to AWS for real time data storage. A React powered Next JS Application handles this Dashboard.
+# Coffee Logger
 
-When a pot of coffee is brewed on my home machine an Arduino makes an HTTP request to an AWS API Gateway. Invoking Lambda, the data is stored in a DynamoDB. The frontend fetches the data and renders it here.
+This embedded C/C++ micro-controller connected to AWS for real-time data storage with Next.js for retrieval and rendering.
+             
+When coffee is brewed, an Arduino sends data to an AWS API Gateway, invoking a Lambda function and storing data in a DynamoDB table. This React-powered dashboard application then fetches and displays the data, delivering insightful coffee metrics.
