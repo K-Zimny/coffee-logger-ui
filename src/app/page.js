@@ -132,10 +132,10 @@ export default function Home(){
               <hr />
               <div id="stats-bar">
                 <p>
-                  <span>{responseData.length / 30}</span> Pots per Day
+                  <span>{(responseData.length / 30).toFixed(2)}</span> Pots per Day
                 </p>
                 <p>
-                  <span>{responseData.length * 7.5}</span> 8oz Cups
+                  <span>{Math.round(responseData.length * 7.5)}</span> 8oz Cups
                 </p>
               </div>
             </div>
