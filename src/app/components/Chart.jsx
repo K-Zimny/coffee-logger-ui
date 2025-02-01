@@ -65,9 +65,11 @@ export function Chart({ coffeeData, title }) {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: true,
     plugins: {
       legend: {
-        position: "bottom",
+        display:false,
+        position: "top",
       },
       title: {
         display: false,
@@ -105,7 +107,7 @@ export function Chart({ coffeeData, title }) {
     labels,
     datasets: [
       {
-        label: "Brews",
+        label: "Pots",
         data: dataArray,
         backgroundColor: "#967259",
         borderColor: "#725038",

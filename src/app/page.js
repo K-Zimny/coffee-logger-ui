@@ -116,34 +116,47 @@ export default function Home(){
   return (
     <>
       <div className="h-full flex flex-col gap-8">
-        <div className="flex h-1/2 gap-8 flex-col lg:flex-row">
+        <div className="flex h-1/2 gap-8 flex-col lg:flex-row max-h-1/2">
           <div id="total" className="card flex flex-col lg:w-1/3">
             <h2>Total Pots Brewed: </h2>
-            <div className="flex items-baseline gap-1">
-              <p id="total-value">{responseData.length}</p>
-              <div className="img-container">
-                <Image
-                  src="/coffee-pot.svg"
-                  fill="true"
-                  alt="Coffee Pot" />
+            <div>
+              <div className="flex items-baseline gap-1">
+                <p id="total-value">{responseData.length}</p>
+                <div className="img-container">
+                  <Image
+                    src="/coffee-pot.svg"
+                    fill="true"
+                    alt="Coffee Pot" />
+                </div>
+              </div>
+              <hr />
+              <div id="stats-bar">
+                <p>
+                  <span>{responseData.length / 30}</span> Pots per Day
+                </p>
+                <p>
+                  <span>{responseData.length * 7.5}</span> 8oz Cups
+                </p>
               </div>
             </div>
-            <div>
-            <h1>Coffee Logger</h1>
-              <p><em>Coffee Logger</em> is an Embedded C/C++ hardware system connected to AWS for real-time data storage and Next.js for retrieval and rendering.</p>
-              <p>When coffee is brewed, an Arduino sends data via an API Gateway to AWS Lambda, storing it in DynamoDB. This React-powered dashboard application then fetches and displays this brew data.</p>
+            <div id="desc">
+              <h1>Coffee Logger</h1>
+              <p><em>Coffee Logger</em> is an embedded C/C++ micro-controller connected to AWS for real-time data storage with Next.js for retrieval and rendering.</p>
+              <p>When coffee is brewed, an Arduino sends data to an AWS API Gateway, invoking a Lambda function and storing data in a DynamoDB table. This React-powered dashboard application then fetches and displays the data, delivering insightful coffee metrics.</p>
               <Link href="#">Read more about it here.</Link>
             </div>
           </div>
           
           <div className="lg:w-2/3">
-            <h2>Brew By Hour</h2>
+            <h2 className="mt-8">Pots By Hour</h2>
             {orderedHourData && <div className="chart flex items-end"><Chart coffeeData={orderedHourData} title="Hour"/></div>}
           </div>
         </div>
+
+        {/* <hr /> */}
         
         <div className="h-1/2">
-          <h2>Brew By Months</h2>
+          <h2>Pots By Month</h2>
           {orderedMonthData && <div className="chart"><Chart coffeeData={orderedMonthData} title="Month"/></div>}
         </div>
       </div>

@@ -26,7 +26,7 @@ body {
 body {
   /* background-color: #f9f9f9; */
   color: #0e0e0e;
-  padding: 20px;
+  padding: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,10 +50,14 @@ h1 {
   text-align: center;
 }
 
+h2 {
+  font-size: 1.25rem;
+}
+
 /* Paragraph text */
 p {
   font-size: 1.2em;
-  color: #b3abab;
+  color: #726f6ff5;
   margin-bottom: 10px;
   text-align: center;
   /* background-color: #f9f9f9; */
@@ -102,6 +106,8 @@ li {
     color: black;
     font-weight: lighter;
     margin-block: 0rem;
+    line-height: 100%;
+    text-indent: -12px;
     @media (max-width: 480px) {
       font-size: 9rem;
     }
@@ -110,6 +116,26 @@ li {
     font-size: .75rem;
     text-align: left;
   }
+
+  #stats-bar {
+    p {
+      text-align: right;
+      font-size: 1rem;
+      letter-spacing: 10px;
+      span {
+        color: #000;
+        font-size: 1.5rem;
+        letter-spacing: 5px;
+      }
+    }
+  }
+  #desc {
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    padding: 5px;
+    box-sizing: content-box;
+    margin-left: -5px;
+  }
 }
 
 .chart {
@@ -117,9 +143,7 @@ li {
   margin: auto;
   height: 100%;
   width: 100%;
-  canvas {
-    /* height: 100%; */
-  }
+  
 }
 
 /* Img Container */
