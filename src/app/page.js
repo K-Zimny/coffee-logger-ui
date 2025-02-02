@@ -93,7 +93,7 @@ export default function Home(){
   }
 
   // Load Data ======================================================================================
-  useEffect((isDBData = false) => {
+  useEffect((isDBData = true) => {
     if (!isDBData) setResponseData(mockdata)
       else {
     fetch("/api/get-items")
