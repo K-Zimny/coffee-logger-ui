@@ -10,7 +10,6 @@ export default function Home(){
   const [responseData, setResponseData] = useState([])
   const [orderedMonthData, setOrderedMonthData] = useState([])
   const [orderedHourData, setOrderedHourData] = useState([])
-  const formattedArray = []
   let talliedObject = {}
 
   function formatData(data){
@@ -26,15 +25,14 @@ export default function Home(){
       }
     }
 
-    data.map((item)=>{
+    return data.map((item)=>{
       const dataMatched = item.Timestamp.match(datePattern)
-      const dataObject  = new BrewEvent(item.EventID, dataMatched[1], dataMatched[2], dataMatched[3], dataMatched[4])
 
-      formattedArray.push(dataObject)
+      return new BrewEvent(item.EventID, dataMatched[1], dataMatched[2], dataMatched[3], dataMatched[4])
     })
   }
 
-  function tallyData(data){
+  function tallyAmounts(data){
     talliedObject = {
       "monthGroup": {},
       "hourGroup":  {},
@@ -44,6 +42,15 @@ export default function Home(){
       if(talliedObject["monthGroup"][month])  {talliedObject["monthGroup"][month]++}  else{talliedObject["monthGroup"][month] = 1}
       if(talliedObject["hourGroup"]  [hour])  {talliedObject["hourGroup"]  [hour]++}  else{talliedObject["hourGroup"]  [hour] = 1}
     })
+  }
+
+  function getDaysSinceStart() {
+    const startOfJan2025 = new Date(2025, 0, 1); // Data collection Start Date
+    const today = new Date();
+    const diffInMs = today - startOfJan2025;
+
+    return Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+
   }
 
   function orderData(talliedObject){
@@ -93,7 +100,7 @@ export default function Home(){
   }
 
   // Load Data ======================================================================================
-  useEffect((isDBData = false) => {
+  useEffect((isDBData = true) => {
     if (!isDBData) setResponseData(mockdata)
       else {
     fetch("/api/get-items")
@@ -108,8 +115,7 @@ export default function Home(){
 
   // Process Data ======================================================================================
   useEffect(()=>{
-    formatData(responseData)
-    tallyData(formattedArray)
+    tallyAmounts(formatData(responseData))
     orderData(talliedObject)
   },[responseData])
 
@@ -132,7 +138,7 @@ export default function Home(){
               <hr />
               <div id="stats-bar">
                 <p>
-                  <span>{(responseData.length / 30).toFixed(2)}</span> Pots per Day
+                  <span>{(responseData.length / getDaysSinceStart()).toFixed(2)}</span> Pots per Day
                 </p>
                 <p>
                   <span>{Math.round(responseData.length * 7.5)}</span> 8oz Cups
