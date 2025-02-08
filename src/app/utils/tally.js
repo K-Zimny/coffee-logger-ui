@@ -1,5 +1,5 @@
 /**
- * Counts the occurrences of a specified key in a dataset.
+ * Counts the occurrences of each value of a specified key in a dataset.
  *
  * Creates a new object (`tallyObj`) to store unique key values and their respective counts.
  * If a key already exists in `tallyObj`, its count is incremented; otherwise, the key is initialized with a value of 1.
