@@ -18,7 +18,7 @@ export default function Home() {
 
   // Load Data ======================================================================================
   useEffect(() => {
-    const isDBData = true; // Toggle between mock data and database data
+    const isDBData = false; // Toggle between mock data and database data
 
     if (!isDBData) {
       setResponseData(formatData(mockdata));
@@ -46,8 +46,8 @@ export default function Home() {
       <div className="flex flex-col lg:flex-row gap-8 h-1/2 max-h-1/2">
         {/* Stats Card */}
         <div id="stats-card" className="flex flex-col h-1/2 lg:w-1/3">
-          <h2>Total Pots Brewed:</h2>
           <div>
+            <h2>Total Pots Brewed:</h2>
             <div className="flex items-baseline gap-1">
               <p id="total-value">{responseData.length}</p>
               <div className="img-container">
@@ -56,6 +56,14 @@ export default function Home() {
             </div>
             <hr />
             <div id="stats-bar">
+              <p>
+                <span>
+                  {Math.round(
+                    (responseData.length / getDaysSinceStart()).toFixed(2) * 365
+                  )}
+                </span>{" "}
+                Estimated Pots per Year
+              </p>
               <p>
                 <span>
                   {(responseData.length / getDaysSinceStart()).toFixed(2)}
@@ -71,17 +79,11 @@ export default function Home() {
           <div id="desc">
             <h1>Coffee Logger</h1>
             <p>
-              <em>Coffee Logger</em> is an embedded C/C++ micro-controller
+              <em>Coffee Logger</em> is an embedded C/C++ microcontroller
               connected to AWS for real-time data storage with Next.js for
               retrieval and rendering.
             </p>
-            <p>
-              When coffee is brewed, an Arduino sends data to an AWS API
-              Gateway, invoking a Lambda function and storing data in a DynamoDB
-              table. This React-powered dashboard application then fetches and
-              displays the data, delivering insightful coffee metrics.
-            </p>
-            <Link href="#">Read more about it here.</Link>
+            <Link href={"./about"}>Read more about it here.</Link>
           </div>
         </div>
 
