@@ -2,50 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Root Variables */
 :root {
   --background: #fff;
   --foreground: #171717;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: var(--font-geist-mono);
-}
-
-/* ========== */
-
-/* General Reset */
+/* ========== General Reset ========== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Body Styling */
+/* ========== Body Styling ========== */
 body {
-  /* background-color: #f9f9f9; */
-  color: #0e0e0e;
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-geist-mono);
   padding: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* min-height: 100dvh; */
-  /* height: 100vh; */
 }
 
-/* Container for content */
-div {
-  /* background-color: #f9f9f9; */
-  border-radius: 8px;
-  /*padding: 20px; */
-  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
-  width: 100%;
-}
-
-/* Header */
+/* ========== Typography ========== */
 h1 {
-  font-size: 2em;
+  font-size: 2rem;
   margin-bottom: 20px;
   text-align: center;
 }
@@ -54,30 +37,33 @@ h2 {
   font-size: 1.25rem;
 }
 
-/* Paragraph text */
 p {
   font-size: 1.2em;
   color: #726f6ff5;
   margin-bottom: 10px;
   text-align: center;
-  /* background-color: #f9f9f9; */
 }
 
-/* Horizontal Rule */
+/* ========== Layout ========== */
+div {
+  border-radius: 8px;
+  width: 100%;
+}
+
+/* ========== Separators ========== */
 hr {
   border: 0;
   border-top: 1px solid #ddd;
   margin: 20px 0;
 }
 
-/* List Styling */
+/* ========== Lists ========== */
 ul {
   list-style-type: none;
   padding-left: 0;
 }
 
 li {
-  /* background-color: #767575; */
   padding: 10px;
   margin-bottom: 8px;
   border-radius: 4px;
@@ -85,83 +71,103 @@ li {
   color: #ffffff;
 }
 
-/* Card */
-
-#total.card {
+/* ========== Stats Card ========== */
+#stats-card {
   display: flex;
   justify-content: space-between;
   position: relative;
   z-index: 1;
-  h1{
-    text-align: left;
-    font-size: 2rem;
-  }
-  h2{
-    font-size: 1.75rem;
-    text-align: left;
-  }
-  #total-value {
-    margin-bottom: 0;
-    font-size: 15rem;
-    color: black;
-    font-weight: lighter;
-    margin-block: 0rem;
-    line-height: 100%;
-    text-indent: -12px;
-    @media (max-width: 480px) {
-      font-size: 9rem;
-    }
-  }
-  p {
-    font-size: .75rem;
-    text-align: left;
-  }
+}
 
-  #stats-bar {
-    p {
-      text-align: right;
-      font-size: 1rem;
-      letter-spacing: 10px;
-      span {
-        color: #000;
-        font-size: 1.5rem;
-        letter-spacing: 5px;
-      }
-    }
-  }
-  #desc {
-    border: 1px solid #ddd;
-    border-radius: 2px;
-    padding: 5px;
-    box-sizing: content-box;
-    margin-left: -5px;
+#stats-card h1 {
+  text-align: left;
+  font-size: 2rem;
+}
+
+#stats-card h2 {
+  font-size: 1.75rem;
+  text-align: left;
+}
+
+#total-value {
+  margin-bottom: 0;
+  font-size: 12rem;
+  color: black;
+  font-weight: lighter;
+  margin-block: 0rem;
+  line-height: 100%;
+  text-indent: -12px;
+}
+
+@media (max-width: 480px) {
+  #total-value {
+    font-size: 9rem;
   }
 }
 
+#stats-card p {
+  /* font-size: 0.75rem; */
+  text-align: left;
+}
+
+/* Stats Bar */
+#stats-bar p {
+  text-align: right;
+  font-size: 1rem;
+  letter-spacing: 10px;
+}
+
+#stats-bar p span {
+  color: #000;
+  font-size: 1.5rem;
+  letter-spacing: 5px;
+}
+
+/* Description Section */
+#desc {
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  padding: 5px;
+  box-sizing: content-box;
+  margin-left: -5px;
+}
+
+#desc p {
+  font-size: 1rem;
+}
+
+/* ========== Chart Styling ========== */
 .chart {
   position: relative;
   margin: auto;
   height: 100%;
   width: 100%;
-  
 }
 
-/* Img Container */
+.chart-placeholder {
+  font-size: 1rem;
+  color: #888; /* Subtle placeholder text color */
+  font-weight: bold;
+  text-transform: uppercase;
+}
 
-.img-container{
-  width: 125px;
-  height: 125px;
+/* ========== Image Container ========== */
+.img-container {
+  width: 100px;
+  height: 100px;
   position: relative;
-  @media (max-width: 480px) {
+}
+
+@media (max-width: 480px) {
+  .img-container {
     width: 75px;
     height: 75px;
   }
 }
 
-/* Link */
-
+/* ========== Links ========== */
 a {
-  font-size: .75rem;
+  font-size: 0.75rem;
   text-decoration: underline;
   color: #777676;
 }

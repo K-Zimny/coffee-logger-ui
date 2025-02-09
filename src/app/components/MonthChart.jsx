@@ -9,13 +9,28 @@ class MonthData {
   }
 }
 
+const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 export default function MonthChart({ data }) {
   const talliedData = tally(data, "month");
   const orderedData = order(talliedData, MonthData, 1, 12);
 
   return (
     <>
-      <Chart coffeeData={orderedData} title="Month" />
+      <Chart data={orderedData} labels={MONTHS} />
     </>
   );
 }

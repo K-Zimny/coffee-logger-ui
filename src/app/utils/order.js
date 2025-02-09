@@ -26,11 +26,11 @@
  * order(data, MonthData, 1, 5);
  * // Returns:
  * // [
- * //   MonthData { name: 1, occurrences: 5 },
- * //   MonthData { name: 2, occurrences: 0 },
- * //   MonthData { name: 3, occurrences: 2 },
- * //   MonthData { name: 4, occurrences: 0 },
- * //   MonthData { name: 5, occurrences: 7 }
+ * //   MonthData { month: 1, amount: 5 },
+ * //   MonthData { month: 2, amount: 0 },
+ * //   MonthData { month: 3, amount: 2 },
+ * //   MonthData { month: 4, amount: 0 },
+ * //   MonthData { month: 5, amount: 7 }
  * // ]
  */
 
