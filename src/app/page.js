@@ -18,7 +18,7 @@ export default function Home() {
 
   // Load Data ======================================================================================
   useEffect(() => {
-    const isDBData = false; // Toggle between mock data and database data
+    const isDBData = true; // Toggle between mock data and database data
 
     if (!isDBData) {
       setResponseData(formatData(mockdata));
