@@ -9,8 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.726.1",
-    "@aws-sdk/lib-dynamodb": "^3.726.1",
     "chart.js": "^4.4.7",
     "next": "^15.1.4",
     "react": "^19.0.0",
