@@ -17,6 +17,7 @@
 
 /* ========== Body Styling ========== */
 body {
+  position: relative;
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-geist-mono);
@@ -39,7 +40,7 @@ h2 {
 }
 
 h3 {
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   margin-bottom: 1rem;
   text-decoration: underline;
 }
@@ -151,13 +152,6 @@ li {
   width: 100%;
 }
 
-.chart-placeholder {
-  font-size: 1rem;
-  color: #888;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
 /* ========== Image Container ========== */
 .img-container {
   width: 100px;
@@ -177,6 +171,15 @@ a {
   font-size: 1rem;
   text-decoration: underline;
   color: #777676;
+}
+
+/* ========== Loading Screen ========== */
+.loading-screen {
+  position: absolute;
+  inset: 0;
+  background: white;
+  border-radius: 0;
+  z-index: -1;
 }
 
 /* ================  ================ */
@@ -208,5 +211,5 @@ a {
 }
 
 #about .content {
-  margin-left: 1.5rem;
+  margin-bottom: 2.5rem;
 }
