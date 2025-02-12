@@ -1,12 +1,12 @@
-import Image from 'next/image'
-import Link from 'next/link'
+import Image from "next/image";
+import Link from "next/link";
 
 export default function About() {
   return (
     <>
       <div id="about">
         <h1>About</h1>
-        <Link href={'/'} className="mb-12">
+        <Link href={"/"} className="mb-12">
           Back to Dashboard
         </Link>
         <div>
@@ -28,6 +28,7 @@ export default function About() {
             height={1200}
             alt="Coffee Logger Architecture"
             className="mt-8 mb-16 mx-auto border-2 border-black"
+            priority={true}
           />
           <hr />
           <h2>System Overview</h2>
@@ -46,9 +47,9 @@ export default function About() {
           <h3>Data Processing and Storage</h3>
           <div className="content">
             <p>
-              When the Arduino&apos;s request reaches the API Gateway, an{' '}
+              When the Arduino&apos;s request reaches the API Gateway, an{" "}
               <strong>AWS Lambda function</strong> is triggered and begins
-              processing the incoming data. The Lambda function assumes an{' '}
+              processing the incoming data. The Lambda function assumes an{" "}
               <strong>IAM role</strong> with least privilege, allowing it to
               store the processed data in <strong>DynamoDB</strong>.
             </p>
@@ -92,10 +93,10 @@ export default function About() {
             </p>
           </div>
         </div>
-        <Link href={'/'} className="mt-28">
+        <Link href={"/"} className="mt-28">
           Back to Dashboard
         </Link>
       </div>
     </>
-  )
+  );
 }
