@@ -75,6 +75,12 @@ export default function Home() {
                     <span>{Math.round(responseData.length * 7.5)}</span> 8oz
                     Cups
                   </p>
+                  <p>
+                    <span>${Math.round((responseData.length * 7.5)*.25)}</span> In House / <span>${Math.round((responseData.length * 7.5)*3)}</span> Coffee Shop
+                  </p>
+                  <p>
+                    <span>${Math.round((responseData.length * 7.5)*3) - Math.round((responseData.length * 7.5)*.25)}</span> Dollars Saved
+                  </p>
                 </div>
               </div>
 
