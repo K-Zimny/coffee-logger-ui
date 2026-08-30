@@ -1,4 +1,4 @@
-const COOLDOWN_MS = 10 * 60 * 1000;
+const COOLDOWN_MS = 60 * 60 * 1000;
 
 /**
  * Collapses raw brew events that fall within a 10-minute cooldown of the
