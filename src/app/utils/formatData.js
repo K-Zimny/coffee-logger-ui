@@ -1,3 +1,5 @@
+import dedupeBrewEvents from "./dedupeBrewEvents";
+
 export default function formatData(data){
     const datePattern = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}).*/;
 
@@ -11,7 +13,7 @@ export default function formatData(data){
       }
     }
 
-    return data.map((item)=>{
+    return dedupeBrewEvents(data).map((item)=>{
       const dataMatched = item.Timestamp.match(datePattern)
 
       return new BrewEvent(item.EventID, dataMatched[1], dataMatched[2], dataMatched[3], dataMatched[4])
