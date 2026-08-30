@@ -5,11 +5,12 @@ import {
   LinearScale,
   BarElement,
   Tooltip,
+  Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
 // Register Chart.js components once
-ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
 /**
  * Renders a bar chart displaying data values with corresponding labels.
@@ -34,28 +35,34 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip);
  *
  * <Chart data={data} labels={labels} />
  */
-export function Chart({ data, labels }) {
+export function Chart({ data, labels, datasets }) {
   const options = {
     responsive: true,
     maintainAspectRatio: true,
-  };
-
-  const dataValues = data.map((item) => item.amount);
-
-  const chartData = {
-    labels,
-    datasets: [
-      {
-        label: "Pots",
-        data: dataValues,
-        backgroundColor: "#967259",
-        borderColor: "#725038",
-        borderWidth: 4,
-        borderRadius: 5,
-        barPercentage: 0.75,
+    plugins: {
+      legend: {
+        display: Boolean(datasets?.length > 1),
+        position: "bottom",
       },
-    ],
+    },
   };
+
+  const chartData = datasets
+    ? { labels, datasets }
+    : {
+        labels,
+        datasets: [
+          {
+            label: "Pots",
+            data: data.map((item) => item.amount),
+            backgroundColor: "#967259",
+            borderColor: "#725038",
+            borderWidth: 4,
+            borderRadius: 5,
+            barPercentage: 0.75,
+          },
+        ],
+      };
 
   return <Bar options={options} data={chartData} />;
 }
